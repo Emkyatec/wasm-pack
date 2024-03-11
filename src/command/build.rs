@@ -316,29 +316,31 @@ impl Build {
         steps
     }
 
-    fn step_check_rustc_version(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_check_rustc_version(&mut self) -> Result<()> {
         info!("Checking rustc version...");
         let version = build::check_rustc_version()?;
         let msg = format!("rustc version is {}.", version);
         info!("{}", &msg);
         Ok(())
     }
-
-    fn step_check_crate_config(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_check_crate_config(&mut self) -> Result<()> {
         info!("Checking crate configuration...");
         self.crate_data.check_crate_config()?;
         info!("Crate is correctly configured.");
         Ok(())
     }
-
-    fn step_check_for_wasm_target(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_check_for_wasm_target(&mut self) -> Result<()> {
         info!("Checking for wasm-target...");
         build::wasm_target::check_for_wasm32_target()?;
         info!("Checking for wasm-target was successful.");
         Ok(())
     }
 
-    fn step_build_wasm(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_build_wasm(&mut self) -> Result<()> {
         info!("Building wasm...");
         build::cargo_build_wasm(&self.crate_path, self.profile, &self.extra_options)?;
 
@@ -352,8 +354,8 @@ impl Build {
         );
         Ok(())
     }
-
-    fn step_create_dir(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_create_dir(&mut self) -> Result<()> {
         info!("Creating a pkg directory...");
         create_pkg_dir(&self.out_dir)?;
         info!("Created a pkg directory at {:#?}.", &self.crate_path);
@@ -388,7 +390,8 @@ impl Build {
         Ok(())
     }
 
-    fn step_install_wasm_bindgen(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_install_wasm_bindgen(&mut self) -> Result<()> {
         info!("Identifying wasm-bindgen dependency...");
         let lockfile = Lockfile::new(&self.crate_data)?;
         let bindgen_version = lockfile.require_wasm_bindgen()?;
@@ -403,8 +406,8 @@ impl Build {
         info!("Installing wasm-bindgen-cli was successful.");
         Ok(())
     }
-
-    fn step_run_wasm_bindgen(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_run_wasm_bindgen(&mut self) -> Result<()> {
         info!("Building the wasm bindings...");
         bindgen::wasm_bindgen_build(
             &self.crate_data,
@@ -421,8 +424,8 @@ impl Build {
         info!("wasm bindings were built at {:#?}.", &self.out_dir);
         Ok(())
     }
-
-    fn step_run_wasm_opt(&mut self) -> Result<()> {
+    #[allow(missing_docs)]
+    pub fn step_run_wasm_opt(&mut self) -> Result<()> {
         let mut args = match self
             .crate_data
             .configured_profile(self.profile)
